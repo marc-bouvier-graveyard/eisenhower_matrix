@@ -102,6 +102,8 @@ added 125 packages, removed 106 packages, updated 30 packages and moved 10 packa
 
 ```
 
+This fixed the issue mentionned in [this forum question](https://elixirforum.com/t/github-found-a-potential-security-vulnerability-from-node-growl/15213).
+
 ### Run phoenix app for the first time
 
 
@@ -117,4 +119,43 @@ I was able to run the app in my browser : [http://localhost:4000](http://localho
 
 ### ADR : Architecture decisions records
 
+[Install `adr-tools`](https://github.com/npryce/adr-tools/blob/master/INSTALL.md).
 
+Linux : Downloaded from git repo () and added src to PATH.
+
+```
+cd
+cd bin 
+git clone https://github.com/npryce/adr-tools.git 
+```
+
+Then added `export PATH=$PATH:~/bin/adr-tools/src` to `.bashrc` or `.zshrc`.
+
+I got back to the project directory and typed the following:
+```
+adr init docs/architecture/decisions
+```
+
+This created the initial pre-filled  ADR `docs/architecture/decisions/0001-record-architecture-decisions.md `.
+
+```
+# 1. Record architecture decisions
+
+Date: 2018-09-17
+
+## Status
+
+Accepted
+
+## Context
+
+We need to record the architectural decisions made on this project.
+
+## Decision
+
+We will use Architecture Decision Records, as [described by Michael Nygard](http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions).
+
+## Consequences
+
+See Michael Nygard's article, linked above. For a lightweight ADR toolset, see Nat Pryce's [adr-tools](https://github.com/npryce/adr-tools).
+```
