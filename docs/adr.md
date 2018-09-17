@@ -1,5 +1,5 @@
 ---
-title: Architecture decisions records
+title: "Architecture decisions records"
 ---
 
 * [Record architecture decisions](architecture/decisions/0001-record-architecture-decisions)
