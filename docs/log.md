@@ -64,3 +64,36 @@ You can also run your app inside IEx (Interactive Elixir) as:
 
     $ iex -S mix phx.server
 ```
+
+### Update brunch
+
+With my bootstrap, Github has detected a potential vulnerability from `node-growl` dependency.
+The vulnerability comes from `loggy` pulled from `brunch.io`.
+I had to upgrade `brunch`.
+
+```
+cd assets
+```
+Installed ncu
+```
+~/s/e/assets ❯❯❯ npm i -g npm-check-updates                                                              ✘ 127 master ◼
+/home/marco/.npm-global/bin/npm-check-updates -> /home/marco/.npm-global/lib/node_modules/npm-check-updates/bin/npm-check-updates
+/home/marco/.npm-global/bin/ncu -> /home/marco/.npm-global/lib/node_modules/npm-check-updates/bin/ncu
++ npm-check-updates@2.14.2
+added 383 packages in 15.239s
+
+~/s/e/assets ❯❯❯ ncu -u
+Using /home/marco/sources/eisenhower_matrix/assets/package.json
+[..................] \ :
+ babel-brunch   6.1.1  →    7.0.0 
+ brunch        2.10.9  →  2.10.17 
+Upgraded /home/marco/sources/eisenhower_matrix/assets/package.json
+
+~/s/e/assets ❯❯❯ npm install                                                                                 master ✱ ◼
+npm WARN assets No description
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@1.2.4 (node_modules/fsevents):
+npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.2.4: wanted {"os":"darwin","arch":"any"} (current: {"os":"linux","arch":"x64"})
+
+added 125 packages, removed 106 packages, updated 30 packages and moved 10 packages in 17.284s
+
+```
