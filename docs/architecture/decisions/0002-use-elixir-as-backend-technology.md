@@ -26,5 +26,3 @@ planned that way in the language's roadmap.
 
 You will be forced to design for concurrency.
 With time you will have to learn Erlang which is hard and not very developer friendly.
-
-What becomes easier or more difficult to do and any risks introduced by the change that will need to be mitigated.
