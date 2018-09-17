@@ -27,4 +27,4 @@ npm-debug.log
 /config/*.secret.exs
 
 # misc
-/docs/.log.md.swp
+/docs/.index.md.swp
