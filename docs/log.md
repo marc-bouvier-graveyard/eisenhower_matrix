@@ -2,7 +2,7 @@
 
 ## Bootstrapping project
 
-Pheonix project without Ecto.
+Pheonix project without Ecto. I am not sure I need SQL for now.
 
 ```
 mix phx.new --no-ecto eisenhower_matrix
@@ -81,14 +81,18 @@ Installed ncu
 /home/marco/.npm-global/bin/ncu -> /home/marco/.npm-global/lib/node_modules/npm-check-updates/bin/ncu
 + npm-check-updates@2.14.2
 added 383 packages in 15.239s
-
+```
+Performed npm dependencies upgrades with ncu.
+```
 ~/s/e/assets ❯❯❯ ncu -u
 Using /home/marco/sources/eisenhower_matrix/assets/package.json
 [..................] \ :
  babel-brunch   6.1.1  →    7.0.0 
  brunch        2.10.9  →  2.10.17 
 Upgraded /home/marco/sources/eisenhower_matrix/assets/package.json
-
+```
+Installed npm dependencies.
+```
 ~/s/e/assets ❯❯❯ npm install                                                                                 master ✱ ◼
 npm WARN assets No description
 npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@1.2.4 (node_modules/fsevents):
@@ -97,3 +101,20 @@ npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@
 added 125 packages, removed 106 packages, updated 30 packages and moved 10 packages in 17.284s
 
 ```
+
+### Run phoenix app for the first time
+
+
+```
+~/s/eisenhower_matrix ❯❯❯ mix phx.server                                                                                                       master ✱ ◼
+Compiling 12 files (.ex)
+Generated eisenhower_matrix app
+[info] Running EisenhowerMatrixWeb.Endpoint with Cowboy using http://0.0.0.0:4000
+19:54:32 - info: compiled 6 files into 2 files, copied 3 in 1.3 sec
+```
+
+I was able to run the app in my browser : [http://localhost:4000](http://localhost:4000)
+
+### ADR : Architecture decisions records
+
+
