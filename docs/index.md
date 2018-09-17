@@ -167,9 +167,9 @@ docs/architecture/decisions/0002-use-elixir-as-backend-technology.md
 ```
 My default text editor opened the generated file and I was able to edit it.
 	
-Then I added a new adr :                                                                    │
-```                                                                                         │
-$> adr new Use Elixir as backend technology                                                 │
-docs/architecture/decisions/0002-use-elixir-as-backend-technology.md                        │
-```                                                                                         │
+Then I added a new adr :
+```
+$> adr new Use Elixir as backend technology
+docs/architecture/decisions/0002-use-elixir-as-backend-technology.md
+```
 My default text editor opened the generated file and I was able to edit it. 
