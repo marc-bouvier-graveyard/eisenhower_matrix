@@ -65,7 +65,7 @@ You can also run your app inside IEx (Interactive Elixir) as:
     $ iex -S mix phx.server
 ```
 
-### Update brunch
+## Update brunch
 
 With my bootstrap, Github has detected a potential vulnerability from `node-growl` dependency.
 The vulnerability comes from `loggy` pulled from `brunch.io`.
@@ -104,7 +104,7 @@ added 125 packages, removed 106 packages, updated 30 packages and moved 10 packa
 
 This fixed the issue mentionned in [this forum question](https://elixirforum.com/t/github-found-a-potential-security-vulnerability-from-node-growl/15213).
 
-### Run phoenix app for the first time
+## Run phoenix app for the first time
 
 
 ```
@@ -117,7 +117,7 @@ Generated eisenhower_matrix app
 
 I was able to run the app in my browser : [http://localhost:4000](http://localhost:4000)
 
-### ADR : Architecture decisions records
+## ADR : Architecture decisions records
 
 [Install `adr-tools`](https://github.com/npryce/adr-tools/blob/master/INSTALL.md).
 
@@ -174,21 +174,5 @@ docs/architecture/decisions/0002-use-elixir-as-backend-technology.md
 ```
 My default text editor opened the generated file and I was able to edit it. 
 
-### Add secret configuration for trello api key
-
-Once logged in trello you can [get your APi key here](https://trello.com/app-key).
-
-`config/dev.secret.exs`
-```
-use Mix.Config
-config :eisenhower_matrix, EisenhowerMatrixWeb.Endpoint,
-  trello_public_api_key: "0009dbf5c06a4e7a24c4bd14f4bec250",
-  trello_secret_authentication_token: "89b297299e68e7e558ca84f852770cec368dc5475776c7432c64beee5d870671"
-```
-
-Then make sure it is ignored in `.gitignore`
-
-### Set authentication and get a token from trello
-
-To authenticate to trello api key is used and then an authentication token is given back.
+## 
 
