@@ -117,7 +117,7 @@ Generated eisenhower_matrix app
 
 I was able to run the app in my browser : [http://localhost:4000](http://localhost:4000)
 
-### ADR : Architecture decisions records
+## ADR : Architecture decisions records
 
 [Install `adr-tools`](https://github.com/npryce/adr-tools/blob/master/INSTALL.md).
 
@@ -174,7 +174,7 @@ docs/architecture/decisions/0002-use-elixir-as-backend-technology.md
 ```
 My default text editor opened the generated file and I was able to edit it. 
 
-### Add secret configuration for trello api key
+## Add secret configuration for trello api key
 
 Once logged in trello you can [get your APi key here](https://trello.com/app-key).
 
@@ -182,13 +182,336 @@ Once logged in trello you can [get your APi key here](https://trello.com/app-key
 ```
 use Mix.Config
 config :eisenhower_matrix, EisenhowerMatrixWeb.Endpoint,
-  trello_public_api_key: "0009dbf5c06a4e7a24c4bd14f4bec250",
-  trello_secret_authentication_token: "89b297299e68e7e558ca84f852770cec368dc5475776c7432c64beee5d870671"
+  trello_public_api_key: "your_trello_api_key",
+  trello_secret_authentication_token: "your_secret_authentication_token"
 ```
 
 Then make sure it is ignored in `.gitignore`
 
-### Set authentication and get a token from trello
+## Get trello samples
 
-To authenticate to trello api key is used and then an authentication token is given back.
+Before authenticate to trello we will first build functions to transform trello payloads to our domain model.
 
+Go to trello developper Api sandbox `https://developers.trello.com/page/sandbox/?key=your_trello_api_key
+
+Then connect.
+
+Then authenticate.
+
+Allow the client to connect.
+
+Load your boards, get the id of one board. Then load lists for this board.
+
+You should get something like this :
+
+```json
+[
+  {
+    "id": "5b718a037f01b76d5e29d922",
+    "name": "Necessity - Important & Urgent",
+    "closed": false,
+    "idBoard": "5b7189ecc17f477c871b9619",
+    "pos": 65535.5,
+    "subscribed": false
+  },
+  {
+    "id": "5b718a19d04d415026bb1bb1",
+    "name": "Quality & personal leadership - Important & Not urgent",
+    "closed": false,
+    "idBoard": "5b7189ecc17f477c871b9619",
+    "pos": 131071,
+    "subscribed": false
+  },
+  {
+    "id": "5b718a25c17f477c871ba96e",
+    "name": "Deception - Not important & Urgent",
+    "closed": false,
+    "idBoard": "5b7189ecc17f477c871b9619",
+    "pos": 196607,
+    "subscribed": false
+  },
+  {
+    "id": "5b718a3df3f1183d4ee067b1",
+    "name": "Waste - Not Important & Not Urgent",
+    "closed": false,
+    "idBoard": "5b7189ecc17f477c871b9619",
+    "pos": 262143,
+    "subscribed": false
+  }
+]
+```
+
+Then load sample data from a list
+
+```
+Trello.get('/lists/5b718a037f01b76d5e29d922/cards', success, error);
+```
+
+You should get cards data
+
+```
+[
+  {
+    "id": "5b718bd8687a5070e26197d0",
+    "checkItemStates": null,
+    "closed": false,
+    "dateLastActivity": "2018-10-03T18:25:12.590Z",
+    "desc": "",
+    "descData": null,
+    "idBoard": "5b7189ecc17f477c871b9619",
+    "idList": "5b718a037f01b76d5e29d922",
+    "idMembersVoted": [],
+    "idShort": 1,
+    "idAttachmentCover": "5bb509822d017081ae755c39",
+    "idLabels": [
+      "5b7189ec9c16fb124a38c027",
+      "5b7189ec9c16fb124a38c029",
+      "5b7189ec9c16fb124a38c02b"
+    ],
+    "manualCoverAttachment": false,
+    "name": "To do right now!",
+    "pos": 65535,
+    "shortLink": "bf7qemsF",
+    "badges": {
+      "votes": 0,
+      "attachmentsByType": {
+        "trello": {
+          "board": 0,
+          "card": 0
+        }
+      },
+      "viewingMemberVoted": false,
+      "subscribed": true,
+      "fogbugz": "",
+      "checkItems": 2,
+      "checkItemsChecked": 0,
+      "comments": 1,
+      "attachments": 1,
+      "description": false,
+      "due": "2018-10-06T10:00:00.000Z",
+      "dueComplete": false
+    },
+    "dueComplete": false,
+    "due": "2018-10-06T10:00:00.000Z",
+    "idChecklists": [
+      "5bb509681a21bd0dc3122fdf"
+    ],
+    "idMembers": [
+      "563cc9d167fd2b93d93201a6"
+    ],
+    "labels": [
+      {
+        "id": "5b7189ec9c16fb124a38c027",
+        "idBoard": "5b7189ecc17f477c871b9619",
+        "name": "",
+        "color": "green"
+      },
+      {
+        "id": "5b7189ec9c16fb124a38c029",
+        "idBoard": "5b7189ecc17f477c871b9619",
+        "name": "",
+        "color": "yellow"
+      },
+      {
+        "id": "5b7189ec9c16fb124a38c02b",
+        "idBoard": "5b7189ecc17f477c871b9619",
+        "name": "test",
+        "color": "pink"
+      }
+    ],
+    "shortUrl": "https://trello.com/c/bf7qemsF",
+    "subscribed": true,
+    "url": "https://trello.com/c/bf7qemsF/1-to-do-right-now"
+  },
+  {
+    "id": "5b86b10d966d0a4989526da0",
+    "checkItemStates": null,
+    "closed": false,
+    "dateLastActivity": "2018-08-29T15:14:41.359Z",
+    "desc": "- [The beauty of data visualization - David McCandless](https://www.youtube.com/watch?v=5Zg-C8AAIGg)\n- [The Future of Data Visualization on the Web - Alan Mendelevich](https://www.youtube.com/watch?v=nH8YZvfLa4M)\n- [SVG can do that?! (Sarah Drasner)](https://www.youtube.com/watch?v=ADXX4fmWHbo)\n- [Svg can do that!? slides](http://slides.com/sdrasner/svg-can-do-that)\n- [d3.js gallery](https://d3js.org)\n\nSee what is used in technology radar\n",
+    "descData": {
+      "emoji": {}
+    },
+    "idBoard": "5b7189ecc17f477c871b9619",
+    "idList": "5b718a037f01b76d5e29d922",
+    "idMembersVoted": [],
+    "idShort": 5,
+    "idAttachmentCover": null,
+    "idLabels": [],
+    "manualCoverAttachment": false,
+    "name": "Data visualisation for client charts",
+    "pos": 131071,
+    "shortLink": "mM8k2Qwu",
+    "badges": {
+      "votes": 0,
+      "attachmentsByType": {
+        "trello": {
+          "board": 0,
+          "card": 0
+        }
+      },
+      "viewingMemberVoted": false,
+      "subscribed": false,
+      "fogbugz": "",
+      "checkItems": 0,
+      "checkItemsChecked": 0,
+      "comments": 0,
+      "attachments": 0,
+      "description": true,
+      "due": null,
+      "dueComplete": false
+    },
+    "dueComplete": false,
+    "due": null,
+    "idChecklists": [],
+    "idMembers": [],
+    "labels": [],
+    "shortUrl": "https://trello.com/c/mM8k2Qwu",
+    "subscribed": false,
+    "url": "https://trello.com/c/mM8k2Qwu/5-data-visualisation-for-client-charts"
+  },
+  {
+    "id": "5b7188a546729d334fdcf52f",
+    "checkItemStates": null,
+    "closed": false,
+    "dateLastActivity": "2018-09-15T10:20:44.004Z",
+    "desc": "https://marc-bouvier.github.io/2018/08/13/hacking-your-work-life-balance-Jennifer-Wadella/",
+    "descData": {
+      "emoji": {}
+    },
+    "idBoard": "5b7189ecc17f477c871b9619",
+    "idList": "5b718a037f01b76d5e29d922",
+    "idMembersVoted": [],
+    "idShort": 6,
+    "idAttachmentCover": null,
+    "idLabels": [],
+    "manualCoverAttachment": false,
+    "name": "Graphe de eisenhower depuis Trello",
+    "pos": 147455,
+    "shortLink": "5py0tGre",
+    "badges": {
+      "votes": 0,
+      "attachmentsByType": {
+        "trello": {
+          "board": 0,
+          "card": 0
+        }
+      },
+      "viewingMemberVoted": false,
+      "subscribed": false,
+      "fogbugz": "",
+      "checkItems": 0,
+      "checkItemsChecked": 0,
+      "comments": 0,
+      "attachments": 0,
+      "description": true,
+      "due": null,
+      "dueComplete": false
+    },
+    "dueComplete": false,
+    "due": null,
+    "idChecklists": [],
+    "idMembers": [],
+    "labels": [],
+    "shortUrl": "https://trello.com/c/5py0tGre",
+    "subscribed": false,
+    "url": "https://trello.com/c/5py0tGre/6-graphe-de-eisenhower-depuis-trello"
+  },
+  {
+    "id": "5b9fdff7618d422dbb895ef2",
+    "checkItemStates": null,
+    "closed": false,
+    "dateLastActivity": "2018-09-17T17:10:15.104Z",
+    "desc": "",
+    "descData": null,
+    "idBoard": "5b7189ecc17f477c871b9619",
+    "idList": "5b718a037f01b76d5e29d922",
+    "idMembersVoted": [],
+    "idShort": 7,
+    "idAttachmentCover": null,
+    "idLabels": [],
+    "manualCoverAttachment": false,
+    "name": "Log",
+    "pos": 212991,
+    "shortLink": "9RtSFdwf",
+    "badges": {
+      "votes": 0,
+      "attachmentsByType": {
+        "trello": {
+          "board": 0,
+          "card": 0
+        }
+      },
+      "viewingMemberVoted": false,
+      "subscribed": false,
+      "fogbugz": "",
+      "checkItems": 0,
+      "checkItemsChecked": 0,
+      "comments": 0,
+      "attachments": 0,
+      "description": false,
+      "due": null,
+      "dueComplete": false
+    },
+    "dueComplete": false,
+    "due": null,
+    "idChecklists": [],
+    "idMembers": [],
+    "labels": [],
+    "shortUrl": "https://trello.com/c/9RtSFdwf",
+    "subscribed": false,
+    "url": "https://trello.com/c/9RtSFdwf/7-log"
+  }
+]
+```
+
+Let's parse it with poison. Poison is already present as a dependency from Phoenix. We can use it directly.
+
+`eisenhower_matrix/lib/trello_api/trello_list.ex`
+```elixir
+defmodule TrelloList do
+  @derive [Poison.Encoder]
+  defstruct [:id, :name, :closed, :idBoard, :pos, :subscribed]
+
+  def decode(json) do
+    Poison.decode!(json, as: %TrelloList{})
+  end
+end
+```
+
+
+Test the parser
+`eisenhower_matrix/test/trello_api/trello_list_test.exs`
+```elixir
+  test "parse trello list" do
+    trello_list = TrelloList.decode(~s({
+      "id": "5b718a037f01b76d5e29d922",
+      "name": "Necessity - Important & Urgent",
+      "closed": false,
+      "idBoard": "5b7189ecc17f477c871b9619",
+      "pos": 65535.5,
+      "subscribed": false
+    }))
+
+    assert trello_list === %TrelloList{
+             id: "5b718a037f01b76d5e29d922",
+             name: "Necessity - Important & Urgent",
+             closed: false,
+             idBoard: "5b7189ecc17f477c871b9619",
+             pos: 65535.5,
+             subscribed: false
+           }
+  end
+```
+## Design our domain model
+
+We know we want to get some of the data form boards and cards and transform them to be 
+able to show them differently. We need a convenient common format that we can transform
+later if needed.
+
+From trello api modules structures we will be able to map to other structures more convenient for domain manipulation.
+
+* Trello board list will represent a quadrant for the eisenhower chart. It will map to urgency and importance dimensions.
+* Position of cards in a list will represent priority dimension.
+* We may want to represent some extra behaviour with labels (such as extra priority for "disaster" red label.
+* A card will represent a task.
