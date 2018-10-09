@@ -179,7 +179,7 @@ My default text editor opened the generated file and I was able to edit it.
 Once logged in trello you can [get your APi key here](https://trello.com/app-key).
 
 `config/dev.secret.exs`
-```
+```elixir
 use Mix.Config
 config :eisenhower_matrix, EisenhowerMatrixWeb.Endpoint,
   trello_public_api_key: "your_trello_api_key",
@@ -249,7 +249,7 @@ Trello.get('/lists/5b718a037f01b76d5e29d922/cards', success, error);
 
 You should get cards data
 
-```
+```json
 [
   {
     "id": "5b718bd8687a5070e26197d0",
